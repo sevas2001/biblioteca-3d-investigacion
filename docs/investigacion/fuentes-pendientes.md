@@ -182,6 +182,43 @@ Método: navegador local de sevas (Edge), ventana de 774x498 salvo Babel Nexus (
 - **ecctrl (5):** la incidencia #63 es de `pmndrs/ecctrl` (no de BVHEcctrl), sigue abierta y se titula "First person camera controls are faulty": al usar primera persona con `camInitDis`/`camMinDis` en -0.01 y `CameraBasedMovement`, la cámara y el personaje giran solos. El mantenedor pidió un vídeo y no hubo respuesta. Refuerza que la primera persona hay que montarla aparte.
 - El README de ecctrl no menciona escaleras (búsqueda de "stair", "step", "slope": sin resultados).
 
+## Extra: vídeos y artículos sobre bibliotecas 3D, archivos en 3D y palacios de la memoria
+
+Método: abrí cada página con el extractor y leí el resumen o la introducción (no los textos completos). De los vídeos solo leí la ficha y, cuando existe, la transcripción; no los vi enteros. Todo lo marcado como "no abierto" no cuenta como comprobado.
+
+### Archivos y bibliotecas en 3D (artículos)
+- **Navigating the virtual library: a 3D browsing interface for information retrieval** (Rogers, Cunningham, Holmes, 1994). Colección de documentos como paisaje: documentos = edificios, agrupados en "pueblos" unidos por "carreteras" según la clasificación; se ve a distintos niveles de detalle. Es la metáfora de ciudad aplicada a una biblioteca, treinta años antes. https://researchcommons.waikato.ac.nz/entities/publication/ada4aa5f-58f0-4c8a-90a6-d936235b6819/full
+- **The 3D vase museum: a new approach to context in a digital library** (ACM, JCDL 2004). Convierten las fotos de vasos griegos de Perseus en una sala 3D (VRML) en el navegador. Con tareas de cursos de arqueología midieron una mejora clara de velocidad y rendimiento frente a un navegador convencional. Es la prueba más directa de que una sala 3D ayuda a no perder el contexto de la colección. https://dl.acm.org/doi/10.1145/996350.996381
+- **resources2city Explorer (R2CE)** (UIST 2018, adjunto). Genera ciudades virtuales navegables a partir de un sistema de archivos, con clasificación temática por Dewey (text2ddc) y distribución Voronoi. Es lo más parecido al caso "libros = archivos de carpetas". Solo leí la introducción. https://dl.acm.org/doi/10.1145/3266037.3266122
+- **MediaMetro** (ACM). Colecciones multimedia como ciudad 3D, con vista aérea y "vuelo" hasta un documento. Dice que sistemas antiguos como SGI FSN dibujaban los documentos como formas abstractas, y que MediaMetro muestra resúmenes visuales de cada uno. https://dl.acm.org/doi/10.1145/1101149.1101182
+- **CodeCity for (and by) JavaScript / JSCity.** Visualiza código como ciudad; ejemplo: AngularJS, 863 ficheros, 233.785 líneas. Referencia de cómo escala la metáfora. https://ar5iv.labs.arxiv.org/html/1705.05476 (el repositorio https://github.com/aserg-ufmg/JSCity salió en la búsqueda; no abrí su README).
+
+### Palacios de la memoria (artículos)
+- **Virtual memory palaces: immersion aids recall** (Krokos, Plaisant, Varshney; Virtual Reality 23, 2019). Con casco y seguimiento de cabeza se recordó mejor que en pantalla con ratón. Ojo: tu caso es pantalla, o sea la condición "peor". https://link.springer.com/article/10.1007/s10055-018-0346-3
+- **The Method of Loci in Virtual Reality** (Reggente et al., 2019). 60 participantes en tres mundos virtuales; el grupo que pudo "fijar" cada objeto en su sitio con un clic recordó un 28 % más. Idea útil: que el usuario coloque cada libro en un lugar elegido por él. https://philoneuro.com/wp-content/uploads/2019/07/reggente_j_cogn_enhancement_2019.pdf
+- **The effect of spatial design on user memory performance using the Method of Loci in VR** (Goldsmiths, iLRN 2021). Compara dos arquitecturas (palladiana y moderna curva) en la memoria de una secuencia de cartas. Solo leí el planteamiento; **no leí los resultados**. https://research.gold.ac.uk/id/eprint/30322/1/Archimemory_iLRN_conf21__IEEE_02.pdf
+- **Enhancing Recognition Memory in Virtual Memory Palaces Using Worlds-in-Miniature** (Lee y Lee, Applied Sciences 2025). Mini-maqueta del palacio para orientarse. Solo leí la cabecera y trabajos relacionados; no leí los resultados. https://mdpi.com/2076-3417/15/5/2304
+- **Building a memory palace in minutes** (Legge et al., 2012; memoria virtual equivalente a la mental): **no abierto**. El PDF de la Universidad de Alberta dio error de descarga. Solo consta citado dentro de los dos artículos anteriores.
+
+### Proyectos y notas técnicas recientes (lo más útil para construir)
+- **MyShelves, hilo del autor en el foro de three.js** (agosto 2026). Stack: react-three-fiber, drei, Rapier y postprocessing. Un libro son cuatro cajas y solo la portada es dato; el resto se dibuja en un canvas. Un libro cuesta unas 19 draw calls y una sala de libros solo ~6.000 triángulos, así que **el presupuesto son las draw calls, no los triángulos**. Desactivar `shadowMap.autoUpdate` fue otra gran mejora. Y para el temblor de cámara con física a 60 Hz y render a 144, usar la interpolación de react-three-rapier. https://discourse.threejs.org/t/myshelves-a-first-person-library-you-build-book-by-book/93870
+- **RepoVerse** (agosto 2026): una carpeta es un distrito y un archivo un edificio; un repo de 1.140 archivos se dibuja con un InstancedMesh por categoría. Disposición con treemap "squarified" y semilla por hash, para que el mismo repo dé siempre la misma ciudad. Stack: R3F, drei, postprocessing. Su autor duda de la legibilidad con repos grandes. https://discourse.threejs.org/t/repoverse-turning-a-github-repo-into-a-navigable-3d-city/93702
+- **Devlog "Oniria" (DEV Community, septiembre 2026).** El autor pasó de una ciudad ciberpunk a una biblioteca porque el entorno no ayudaba a entender la información; cada artículo es un libro. Montó su propio editor de nivel dentro del mundo. https://dev.to/mikachu/devlog-i-built-a-3d-library-in-threejs-without-a-level-editor-so-i-made-my-own-500i
+- **fsnav** (GPL-3.0, C/C++): navegador 3D de archivos inspirado en FSN de SGI. https://github.com/jtsiomb/fsnav
+
+### Vídeos de YouTube
+- **SGI IRIX 5.3 with fsn (3D File System Navigator)**, 5:46. Demostración del FSN original en un Indy. https://www.youtube.com/watch?v=k45Io79asvc
+- **It's a unix system. I know this!**, 0:25. Recreación de la escena de Jurassic Park. https://www.youtube.com/watch?v=Dccx-cLUWIQ
+- **Silicon Graphics Indigo2 ... (plus FSN)**, 2012. FSN en uso. https://youtube.com/watch?feature=related&v=Udtqu5qx_tw
+- **Stunning 3D Interactive Books: Complete Shelf**, 0:33. Estantería three.js con siete libros que se hojean, en un solo HTML sin dependencias. Es una demo de libros, no una biblioteca navegable. https://www.youtube.com/watch?v=1PwJgJ2Toh0
+- **Method of Loci: How to Memorize Anything** (Anthony Metivier), 13:52. Divulgación, no investigación. https://youtube.com/watch?v=iOVr7K7x6Bo
+- **Lo que no encontré:** ningún vídeo de una biblioteca 3D en primera persona con archivos reales de carpetas, ni charlas académicas sobre el tema. Queda como "no encontrado" tras cuatro búsquedas, no como "no existe".
+
+### Qué cambia para el plan
+- Refuerza la decisión (Three.js + react-three-fiber + WebGL): MyShelves y RepoVerse usan exactamente ese stack, y MyShelves añade Rapier para la física. Es otra opción frente a BVHEcctrl; no la he comparado.
+- Dos ideas de diseño con apoyo en fuentes: dejar al usuario **colocar él mismo** los libros (Reggente: +28 % de recuerdo) y **agrupar por tema y carpeta** (R2CE, RepoVerse).
+- Dos avisos técnicos: medir las **draw calls** por libro desde el principio, y usar **instancias** para miles de archivos.
+
 ## Lo que sigue sin comprobar
 
 - Parámetros de `master.m3u8` más allá de los obligatorios, y si responde con `ApiKey` en segmentos y listas hijas.
@@ -189,4 +226,4 @@ Método: navegador local de sevas (Edge), ventana de 774x498 salvo Babel Nexus (
 - Si `EnableLegacyAuthorization` viene en `false` por defecto, desde una fuente oficial.
 - Entrar en una sala de LinkWalk, pedir un libro en MyShelves y rendimiento de Babel Nexus.
 - La lectura completa de las notas de versión r187 de three.js.
-- El extra (vídeos de YouTube y artículos académicos): no se hizo.
+- Extra: faltan los resultados de los artículos de Goldsmiths y Lee 2025, el PDF de Legge 2012 y ver los vídeos enteros; no se encontró un vídeo de biblioteca 3D con archivos reales.
