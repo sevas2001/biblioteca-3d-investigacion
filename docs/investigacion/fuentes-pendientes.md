@@ -152,13 +152,41 @@ Fecha de la comprobación: 2026-11-24.
 | 5. BVHEcctrl / ecctrl | Sí, en parte | BVHEcctrl no trae primera persona: hay que montarla con `PointerLockControls` y mover la cámara a mano. Escaleras: sí, con cápsula flotante, pero hay que probar con la geometría real. Último release de BVHEcctrl: agosto de 2025, sin releases en GitHub. |
 | 6. Demos en vivo | Sin datos | Repetir en el navegador del usuario. Hasta entonces no hay base para copiar o evitar nada concreto. |
 
+## Actualización: pruebas en vivo (punto 6) y puntos cerrados
+
+Método: navegador local de sevas (Edge), ventana de 774x498 salvo Babel Nexus (1280x800). El navegador automatizado no puede bloquear el puntero, así que se activó el foco por CDP y se simuló `requestPointerLock`; las teclas y el movimiento del ratón se enviaron por CDP. Capturas dentro de la escena en `docs/investigacion/capturas/`. Es una prueba corta de cada demo, no un recorrido completo.
+
+### MyShelves (myshelves.eu)
+- **Controles (de su pantalla "Controls"):** WASD caminar, ratón mirar, Shift correr, Ctrl agacharse, Espacio saltar, Esc pausa, C abrir libro, E interactuar o coger/colocar libro, Q/R/F girar el libro, clic izquierdo lanzarlo, G soltarlo, N escribir nota, B modo construcción, I inventario, O tienda de muebles.
+- **Qué vi:** una sala única con parquet, alfombra, estantería vacía, atril de pedidos y un pedestal. Primera persona. Iluminación cálida con focos, sin escaleras ni segundo nivel en la sala inicial. Los libros llegan al pedir un título real en el atril (búsqueda) o pintar uno propio; se amplía la sala con el modo construcción.
+- **Rendimiento:** unos 115-128 fps (pico con 91 draws y 9 mil triángulos), con caídas puntuales (53 fps y un frame de 152 ms al girar y cargar objetos). Trae un panel de depuración (F3) con fps, draws y triángulos. Con 0 libros no dice nada sobre escalado.
+- **No probado:** pedir un libro (necesita su búsqueda externa y cuenta), modo construcción, el modo "Lounges".
+- **Qué copiar:** el panel F3 de métricas, el modo construcción, el tutorial en 6 pasos y que cada libro sea un objeto manipulable. **Qué evitar:** una sala vacía al inicio no enseña nada.
+
+### LinkWalk (notbigmuzzy.github.io/linkwalk)
+- **Controles:** WASD o flechas, ratón, Espacio saltar, Shift correr, Esc libera el puntero. Selector de 14 idiomas y un clic para empezar.
+- **Qué vi:** un vestíbulo con **dos escaleras con barandilla que suben a un piso superior** con puertas rotuladas por tema (Philosophy, Cosmology, Society, Culture, Geography...), un panel central con el índice y macetas. Estilo low-poly sencillo. Primera persona.
+- **Colisiones:** subí por la escalera hasta el rellano. Me quedé atascado contra la barandilla al intentar llegar a una puerta, así que **no entré en ninguna sala**; eso lo achaco a mi navegación a ciegas, no a la demo.
+- **Fluidez:** la escena fue fluida y sin cargas visibles; no medí fps (no trae contador).
+- **Qué copiar:** vestíbulo con escaleras dobles y puertas por categoría, rótulos legibles de lejos. Licencia GPL-2.0: copiar código obliga a publicar el nuestro con la misma licencia.
+
+### Babel Nexus (babelnexus.com/n/mathematics)
+- **No es primera persona.** Es una vista **en tercera persona** con un avatar en una **sala hexagonal** con un minimapa ("Room overview"). Cada libro es un panel enmarcado con una tarjeta de título/autor/fecha; las puertas llevan a materias relacionadas y hay un disco para "Descend to Level II" (los niveles son temáticos: Level I, The Sciences).
+- **Controles (de su panel de ayuda):** WASD o flechas, clic en el suelo para ir, Q/E girar cámara, R/F altura de cámara, rueda para cambiar de estantería, clic en un libro para abrir sus detalles. Clic en una puerta o escalera para cambiar de galería. Hay un modo de lectura en lista ("Book Page") y navegación solo con teclado, sin cuenta.
+- **Qué copiar:** el modo dual (3D opcional + lista accesible), el minimapa, las tarjetas de datos junto a cada libro y los niveles por materia. **Qué evitar:** su peso web (todo el sitio alrededor de la escena) y que el 3D ocupe poco espacio.
+- **Rendimiento:** no medido. El avatar se movió con W; la interacción con E no abrió nada (el libro se abre con clic).
+
+### Puntos que se cierran
+- **Aura Stacks (1):** la página de Devpost enlaza a una demo pública: `https://aura-stacks.lovable.app/`. No enlaza a repositorio.
+- **Jellyfin HLS (3):** `GET /Videos/{itemId}/master.m3u8` exige `itemId` en la ruta y `mediaSourceId` en la query; el resto de parámetros (`playSessionId`, `segmentContainer`, `segmentLength`, `audioCodec`, etc.) son opcionales. Fuente: `DynamicHlsController.cs` en jellyfin/jellyfin (master).
+- **ecctrl (5):** la incidencia #63 es de `pmndrs/ecctrl` (no de BVHEcctrl), sigue abierta y se titula "First person camera controls are faulty": al usar primera persona con `camInitDis`/`camMinDis` en -0.01 y `CameraBasedMovement`, la cámara y el personaje giran solos. El mantenedor pidió un vídeo y no hubo respuesta. Refuerza que la primera persona hay que montarla aparte.
+- El README de ecctrl no menciona escaleras (búsqueda de "stair", "step", "slope": sin resultados).
+
 ## Lo que sigue sin comprobar
 
-- Todo el punto 6 en uso real: movimiento, fluidez, escaleras, carga de libros y tiempos.
-- Si Devpost enlaza a un repo o a una demo de Aura Stacks.
-- Los parámetros obligatorios de `Videos/{itemId}/master.m3u8` y si responde con `ApiKey` en segmentos y listas hijas.
-- Si el panel de administración de Jellyfin muestra el ajuste de CORS, y las cabeceras CORS reales de las respuestas HLS.
+- Parámetros de `master.m3u8` más allá de los obligatorios, y si responde con `ApiKey` en segmentos y listas hijas.
+- Panel de administración de Jellyfin (CORS) y cabeceras CORS reales de las respuestas HLS: necesita un servidor Jellyfin.
 - Si `EnableLegacyAuthorization` viene en `false` por defecto, desde una fuente oficial.
-- Si las escaleras de ecctrl se tratan de forma específica, y el contenido de la incidencia #63.
+- Entrar en una sala de LinkWalk, pedir un libro en MyShelves y rendimiento de Babel Nexus.
 - La lectura completa de las notas de versión r187 de three.js.
 - El extra (vídeos de YouTube y artículos académicos): no se hizo.
